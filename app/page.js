@@ -4,7 +4,7 @@ import { FaSave, FaEyeSlash, FaEye, FaCopy, FaEdit, FaTrash } from "react-icons/
 import { useState,useEffect } from 'react';
 import toast from "react-hot-toast";
 
-const page = () => {
+const Page = () => {
   const [form, setform] = useState({ site: "", username: "", password: "" })
   const [password, setpassword] = useState([])
   const [showPassword, setshowPassword] = useState(false)
@@ -247,4 +247,4 @@ const page = () => {
 }
 
 
-export default page
+export default Page
