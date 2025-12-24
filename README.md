@@ -4,7 +4,7 @@ The Password Manager is a secure web application built with Next.js that allows 
 
 This project focuses on modern web development practices, including component-based architecture, client–server separation, and secure data handling.
 
-Features
+✨ Features
 
 Secure storage of passwords
 
@@ -18,7 +18,7 @@ Clean and intuitive dashboard
 
 Encrypted password handling (before storage)
 
-Tech Stack
+🛠️ Tech Stack
 
 Frontend: Next.js, React, Tailwind CSS
 
@@ -30,8 +30,8 @@ Authentication: NextAuth.js
 
 Security: Password encryption & environment variables
 
-Problems Faced & Solutions
-Secure Password Storage
+⚠️ Problems Faced & Solutions
+🔒 Secure Password Storage
 
 Problem:
 Storing passwords in plain text is a major security risk.
@@ -39,7 +39,7 @@ Storing passwords in plain text is a major security risk.
 Solution:
 Implemented encryption before saving passwords to the database. Environment variables were used to protect secret keys, ensuring sensitive data is never exposed.
 
-Authentication & Session Management
+👤 Authentication & Session Management
 
 Problem:
 Managing logged-in users and protecting private routes was challenging.
@@ -47,7 +47,7 @@ Managing logged-in users and protecting private routes was challenging.
 Solution:
 Used NextAuth.js to handle authentication and sessions securely. Middleware was added to restrict access to authenticated users only.
 
-Client–Server Data Handling
+🔁 Client–Server Data Handling
 
 Problem:
 Direct database access from client components caused errors and security issues.
@@ -55,7 +55,7 @@ Direct database access from client components caused errors and security issues.
 Solution:
 Separated logic using Next.js API routes, allowing the frontend to communicate securely with the backend.
 
-State Management Issues
+🔄 State Management Issues
 
 Problem:
 Updating the UI after adding or deleting passwords did not reflect immediately.
@@ -63,7 +63,7 @@ Updating the UI after adding or deleting passwords did not reflect immediately.
 Solution:
 Implemented proper state management with React hooks (useState, useEffect) to refresh data dynamically.
 
-Environment Variable Exposure
+🔐 Environment Variable Exposure
 
 Problem:
 Sensitive credentials risked being exposed in the frontend.
@@ -71,7 +71,7 @@ Sensitive credentials risked being exposed in the frontend.
 Solution:
 Stored all secrets in .env.local and accessed them securely only on the server side.
 
-Responsive UI Challenges
+📱 Responsive UI Challenges
 
 Problem:
 Layout issues occurred on smaller screen sizes.
@@ -79,7 +79,7 @@ Layout issues occurred on smaller screen sizes.
 Solution:
 Used Tailwind CSS responsive utilities to ensure consistent design across all devices.
 
-Learning Outcomes
+📚 Learning Outcomes
 
 Gained hands-on experience with Next.js full-stack development
 
@@ -89,7 +89,7 @@ Improved understanding of authentication and session management
 
 Strengthened real-world problem-solving skills
 
-Future Improvements
+🚀 Future Improvements
 
 Two-factor authentication (2FA)
 
