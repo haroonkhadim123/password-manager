@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+.Project Overview
 
-## Getting Started
+The Password Manager is a secure web application built with Next.js that allows users to safely store, manage, and retrieve their passwords in one place. The system is designed to simplify password management while maintaining strong security and a user-friendly interface.
 
-First, run the development server:
+This project focuses on modern web development practices, including component-based architecture, client-server separation, and secure data handling.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+.Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Secure storage of passwords
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Add, edit, and delete saved credentials
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+User authentication and session handling
 
-## Learn More
+Responsive UI for mobile and desktop devices
 
-To learn more about Next.js, take a look at the following resources:
+Clean and intuitive dashboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Encrypted password handling (before storage)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+.Tech Stack
 
-## Deploy on Vercel
+Frontend: Next.js, React, Tailwind CSS
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Backend: Next.js API Routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Database: MongoDB
+
+Authentication: NextAuth.js (if used)
+
+Security: Password encryption & environment variables
+
+.Problems Faced & Solutions
+.Secure Password Storage
+
+Problem:
+Storing passwords in plain text is a major security risk.
+
+Solution:
+Implemented encryption before saving passwords to the database. Environment variables were used to protect secret keys, ensuring sensitive data is never exposed.
+
+Authentication & Session Management
+
+Problem:
+Managing logged-in users and protecting private routes was challenging.
+
+Solution:
+Used NextAuth.js to handle authentication and sessions securely. Middleware was added to restrict access to authenticated users only.
+
+Client–Server Data Handling
+
+Problem:
+Direct database access from client components caused errors and security issues.
+
+Solution:
+Separated logic using Next.js API routes, allowing the frontend to communicate securely with the backend.
+
+State Management Issues
+
+Problem:
+Updating the UI after adding or deleting passwords did not reflect immediately.
+
+Solution:
+Implemented proper state management with React hooks (useState, useEffect) to refresh data dynamically.
+
+ Environment Variable Exposure
+
+Problem:
+Sensitive credentials risked being exposed in the frontend.
+
+Solution:
+Stored all secrets in .env.local and accessed them securely only on the server side.
+
+Responsive UI Challenges
+
+Problem:
+Layout issues occurred on smaller screen sizes.
+
+Solution:
+Used Tailwind CSS responsive utilities to ensure consistent design across all devices.
+
+Learning Outcomes
+
+Gained hands-on experience with Next.js full-stack development
+
+Learned secure password handling and encryption practices
+
+Improved understanding of authentication and session management
+
+Strengthened problem-solving skills in real-world scenarios
+
+ Future Improvements
+
+Two-factor authentication (2FA)
+
+Password strength analysis
+
+Browser extension integration
+
+Role-based access control
