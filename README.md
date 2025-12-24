@@ -1,10 +1,10 @@
-.Project Overview
+Project Overview
 
 The Password Manager is a secure web application built with Next.js that allows users to safely store, manage, and retrieve their passwords in one place. The system is designed to simplify password management while maintaining strong security and a user-friendly interface.
 
-This project focuses on modern web development practices, including component-based architecture, client-server separation, and secure data handling.
+This project focuses on modern web development practices, including component-based architecture, client–server separation, and secure data handling.
 
-.Features
+Features
 
 Secure storage of passwords
 
@@ -18,7 +18,7 @@ Clean and intuitive dashboard
 
 Encrypted password handling (before storage)
 
-.Tech Stack
+Tech Stack
 
 Frontend: Next.js, React, Tailwind CSS
 
@@ -26,12 +26,12 @@ Backend: Next.js API Routes
 
 Database: MongoDB
 
-Authentication: NextAuth.js (if used)
+Authentication: NextAuth.js
 
 Security: Password encryption & environment variables
 
-.Problems Faced & Solutions
-.Secure Password Storage
+Problems Faced & Solutions
+Secure Password Storage
 
 Problem:
 Storing passwords in plain text is a major security risk.
@@ -63,7 +63,7 @@ Updating the UI after adding or deleting passwords did not reflect immediately.
 Solution:
 Implemented proper state management with React hooks (useState, useEffect) to refresh data dynamically.
 
- Environment Variable Exposure
+Environment Variable Exposure
 
 Problem:
 Sensitive credentials risked being exposed in the frontend.
@@ -87,9 +87,9 @@ Learned secure password handling and encryption practices
 
 Improved understanding of authentication and session management
 
-Strengthened problem-solving skills in real-world scenarios
+Strengthened real-world problem-solving skills
 
- Future Improvements
+Future Improvements
 
 Two-factor authentication (2FA)
 
