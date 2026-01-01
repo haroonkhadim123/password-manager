@@ -8,33 +8,44 @@ const Page = () => {
   const [form, setform] = useState({ site: "", username: "", password: "" })
   const [password, setpassword] = useState([])
   const [showPassword, setshowPassword] = useState(false)
+  const [loader, setloader] = useState(false)
 
-    useEffect(() => {
-    const stored = localStorage.getItem("passwords");
-    if (stored) setpassword(JSON.parse(stored));
+ const fetchdata = async () => {
+    try {
+      const response = await fetch("/api/password");
+      const data = await response.json();
+      setpassword(data);
+    } catch (error) {
+      console.error("Error fetching:", error);
+      toast.error("Failed to fetch data");
+    }
+  };
+
+  useEffect(() => {
+    fetchdata();
   }, []);
 
-  // ✅ Save passwords to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem("passwords", JSON.stringify(password));
-  }, [password]);
+
+
   const handlechange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value })
   }
   const togglePassword = () => {
     setshowPassword(!showPassword);
   }
-  const savepassword = async () => {
+  const handlesubmit = async (e) => {
+    e.preventDefault();
     try {
-      if (form.site.length <= 3 && form.username.length <= 3 && form.password.length <= 3) {
+      if (form.site.length <= 3 || form.username.length <= 3 || form.password.length <= 3) {
         toast.error("Please fill all fields correctly");
         return;
       }
-      const alreadyExists = password.some((item) => item.password === form.password);
-      if (alreadyExists) {
-        toast.error("Password already exists");
-        return;
-      }
+     if (password.some((item) => item.password === form.password)) {
+  toast.error("Password already exists");
+  return;
+}
+
+      setloader(true);
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -54,14 +65,25 @@ const Page = () => {
 
       const response = await fetch("/api/password", requestOptions);
       const result = await response.json();
-      console.log(result);
+    
 
-      setpassword([...password, { ...form, id: Date.now() }]);
+      if(result.success){
+    
       setform({ site: "", username: "", password: "" });
       toast.success(`${result.message}`);
+       fetchdata();
+      return
+      }
+      else{
+        toast.error(`${result.message}`)
+        setloader(false);
+      }
     } catch (error) {
       console.error("Error saving password:", error);
-      toast.error(`${result.message}`);
+      toast.error("Failed to save password.")
+    }
+    finally{
+      setloader(false)
     }
   };
 
@@ -132,6 +154,9 @@ const Page = () => {
  
 
       }
+      finally{
+        setloader(false)
+      }
 
 
 
@@ -142,23 +167,30 @@ const Page = () => {
     <div>
       <div>
         <div className="container md:w-[60vw] w-[90vw] mx-auto  py-7  p-4 rounded-lg mt-10  items-center gap-4">
-          <h1 className='text-2xl font-bold text-center'>
-            &lt;Pass<span className='text-green-500 font-bold'>OP</span>
-            &gt;
-          </h1>
-          <p className='text-center mb-3'>Your password Manager</p>
+         <h1 className="text-2xl font-bold text-center">
+  <span className="sr-only">PassOP</span>
+  <span className='dark:text-black' aria-hidden="true">
+    &lt;Pass<span className="text-green-500 font-bold">OP</span>&gt;
+  </span>
+</h1>
+
+          <p className='text-center mb-3 dark:text-black'>{`"Your password Manager"`}</p>
           <div className="box w-[100%] flex flex-col h-[100%] gap-5 ">
-            <input className='w-[100%] p-2 rounded-3xl border border-green-500' name='site' type="text" onChange={handlechange} value={form.site} placeholder='Enter you site' />
+            <form className='box w-[100%] flex flex-col h-[100%] gap-5'onSubmit={handlesubmit}>
+            <input className='dark:text-black w-[100%] p-2 rounded-3xl border border-green-500' name='site' type="text" onChange={handlechange} value={form.site} placeholder='Enter you site' />
             <div className='flex md:flex-row flex-col md:gap-2 gap-5 w-[100%]'>
-              <input className='md:w-[80%] w-[100%] p-2 rounded-3xl border border-green-500' name='username' type="text" onChange={handlechange} value={form.username} placeholder='Enter your username' />
+              <input className='dark:text-black md:w-[80%] w-[100%] p-2 rounded-3xl border border-green-500' name='username' type="text" onChange={handlechange} value={form.username} placeholder='Enter your username' autoComplete='new-username' required />
               <div className="relative md:w-[20%] w-[100%]">
                 <input
                   name="password"
-                  className="w-full p-2 pr-10 rounded-3xl border border-green-500"
+                  className="w-full p-2 pr-10 rounded-3xl border border-green-500 dark:text-black"
                   type={showPassword ? "text" : "password"}
                   onChange={handlechange}
                   value={form.password}
                   placeholder="Enter Password"
+                  autoComplete='new-password'
+                  required
+                  
                 />
                 <span
                   onClick={togglePassword}
@@ -169,16 +201,17 @@ const Page = () => {
               </div>
             </div>
             <div className='w-[100%] flex items-center justify-center'>
-              <button className='text-center bg-green-500 py-2 px-5  flex items-center justify-center gap-2 rounded-3xl' onClick={savepassword}><FaSave />Save</button>
+              <button disabled={loader} type='submit' className='dark:text-black text-center bg-green-500 py-2 px-5  flex items-center justify-center gap-2 rounded-3xl' ><FaSave />{loader ? "Saving...": "Save"}</button>
             </div>
+            </form>
           </div>
 
 
         </div>
       </div>
       <div className=' md:w-[60vw] w-[90vw] pb-5 min-h-[36.5vh]  mx-auto mt-5  p-4 flex  flex-col'>
-        <p className='font-bold text-2xl'>Your Password</p>
-        {password.length === 0 ? <p>No Password saved</p> : (
+        <p className='font-bold text-2xl'>{`"Your Password"`}</p>
+        {password.length === 0 ? <p className='dark:text-black'>{`"No Password saved"`}</p> : (
           <div className="w-full mt-4 overflow-x-auto">
             {/* Scroll container for mobile */}
             <div className="min-w-full inline-block align-middle">
@@ -186,14 +219,14 @@ const Page = () => {
                 <table className="min-w-[600px] w-full text-sm text-center table-auto">
                   <thead className="bg-green-700 text-white">
                     <tr>
-                      <th className="px-4 py-2">Site</th>
-                      <th className="px-4 py-2">Username</th>
-                      <th className="px-4 py-2">Password</th>
-                      <th className="px-4 py-2">Action</th>
+                      <th className="px-4 py-2 dark:text-black">Site</th>
+                      <th className="px-4 py-2 dark:text-black">Username</th>
+                      <th className="px-4 py-2 dark:text-black">Password</th>
+                      <th className="px-4 py-2 dark:text-black">Action</th>
                     </tr>
                   </thead>
                   <tbody className="bg-green-50 divide-y divide-green-200">
-                    {password.map((item) => (
+                    {Array.isArray(password) && password.map((item) => (
                       <tr key={item.id} className="hover:bg-green-100">
                         <td className="px-4 py-2 break-all">
                           <span
@@ -216,7 +249,8 @@ const Page = () => {
                             onClick={() => copytext(item.password)}
                             className="flex flex-row-reverse items-center justify-center gap-2 cursor-pointer hover:text-green-600"
                           >
-                            <FaCopy /> {'*'.repeat(item.password.length)}
+                            <FaCopy />{'*'.repeat(item?.password?.length || 0)}
+
                           </span>
                         </td>
                         <td className="px-4 py-2">
